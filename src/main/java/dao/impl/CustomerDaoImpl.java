@@ -47,4 +47,15 @@ public final class CustomerDaoImpl implements CustomerDao {
             throw new RuntimeException("Error updating customer with ID: " + customerId, e);
         }
     }
+
+    @Override
+    public boolean deleteCustomer(String customerId, Connection connection) {
+        try {
+            var ps = connection.prepareStatement(DELETE_CUSTOMER);
+            ps.setString(1, customerId);
+            return ps.executeUpdate() != 0;
+        }catch (SQLException e){
+            throw new RuntimeException();
+        }
+    }
 }

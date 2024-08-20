@@ -116,5 +116,24 @@ public class CustomerController extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+       /* var customerId = req.getParameter("cus-id");*/
+        Jsonb jsonb = JsonbBuilder.create();
+        var customerBo = new CustomerBoImpl();
+        var updatedCustomer = jsonb.fromJson(req.getReader(),CustomerDto.class);
+        System.out.println(updatedCustomer);
+        try (var writer = resp.getWriter()){
 
+            if(customerBo.deleteCustomer(updatedCustomer.getCus_id(), connection)){
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }else {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Delete Failed");
+            }
+        } catch (Exception e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e);
+        }
+    }
 }
