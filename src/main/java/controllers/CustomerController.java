@@ -89,8 +89,32 @@ public class CustomerController extends HttpServlet {
         }
     }
 
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().write("Servlet is running");
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        if(!req.getContentType().toLowerCase().startsWith("application/json")|| req.getContentType() == null){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        try (var writer = resp.getWriter()){
+         /*   var customerId = req.getParameter("cus_id");*/
+
+            Jsonb jsonb = JsonbBuilder.create();
+            var customerBo = new CustomerBoImpl();
+            var updatedCustomer = jsonb.fromJson(req.getReader(),CustomerDto.class);
+            System.out.println(updatedCustomer);
+            System.out.println("cus_id"+ updatedCustomer.getCus_id());
+            if(customerBo.updateCustomer(updatedCustomer.getCus_id(), updatedCustomer,connection)){
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }else {
+                writer.write("Update Failed");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            }
+        } catch (JsonException e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+        }
     }
+
+
 }

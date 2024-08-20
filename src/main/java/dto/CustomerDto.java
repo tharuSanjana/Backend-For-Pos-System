@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Setter
 @Data
 public class CustomerDto implements Serializable {
-    private String id;
+    private String cus_id;
     private String name;
     private String nic;
     private String email;

@@ -19,7 +19,7 @@ public final class CustomerDaoImpl implements CustomerDao {
     public boolean saveCustomer(Customer customer, Connection connection) {
         try {
             var ps = connection.prepareStatement(SAVE_CUSTOMER);
-            ps.setString(1, customer.getId());
+            ps.setString(1, customer.getCus_id());
             ps.setString(2, customer.getName());
             ps.setString(3, customer.getNic());
             ps.setString(4, customer.getEmail());
@@ -28,6 +28,23 @@ public final class CustomerDaoImpl implements CustomerDao {
             return ps.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean updateCustomer(String customerId,Customer customer, Connection connection) {
+        try {
+            var ps = connection.prepareStatement(UPDATE_CUSTOMER);
+            ps.setString(1, customer.getName());
+            ps.setString(2, customer.getNic());
+            ps.setString(3, customer.getEmail());
+            ps.setString(4, customer.getAddress());
+            ps.setString(5, customer.getTel());
+            ps.setString(6, customerId);
+            return ps.executeUpdate() != 0;
+        }  catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error updating customer with ID: " + customerId, e);
         }
     }
 }

@@ -10,6 +10,11 @@ public class CustomerBoImpl implements CustomerBo{
     CustomerDaoImpl customerDao = new CustomerDaoImpl();
     @Override
     public boolean saveCustomer(CustomerDto dto, Connection connection) {
-        return customerDao.saveCustomer(new Customer(dto.getId(), dto.getName(), dto.getNic(), dto.getEmail(), dto.getAddress(), dto.getTel()),connection);
+        return customerDao.saveCustomer(new Customer(dto.getCus_id(), dto.getName(), dto.getNic(), dto.getEmail(), dto.getAddress(), dto.getTel()),connection);
+    }
+
+    @Override
+    public boolean updateCustomer(String customerId,CustomerDto customerDto, Connection connection) {
+        return customerDao.updateCustomer(customerId,new Customer( customerDto.getName(), customerDto.getNic(), customerDto.getEmail(), customerDto.getAddress(), customerDto.getTel()),connection);
     }
 }

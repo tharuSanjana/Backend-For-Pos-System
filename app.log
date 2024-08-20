@@ -1,0 +1,23 @@
+10:59:55.942 [RMI TCP Connection(2)-127.0.0.1] INFO  controllers.StudentController -- Initializing Student Controller with call init method 
+10:59:58.415 [RMI TCP Connection(4)-127.0.0.1] INFO  controllers.StudentController -- Initializing Student Controller with call init method 
+11:01:40.389 [RMI TCP Connection(3)-127.0.0.1] INFO  controllers.StudentController -- Initializing Student Controller with call init method 
+11:01:42.592 [RMI TCP Connection(4)-127.0.0.1] INFO  controllers.StudentController -- Initializing Student Controller with call init method 
+20:47:27.822 [http-nio-8080-exec-1] INFO  controllers.StudentController -- Initializing Student Controller with call init method 
+20:51:54.007 [http-nio-8080-exec-1] INFO  controllers.StudentController -- Initializing Student Controller with call init method 
+20:59:09.573 [http-nio-8080-exec-2] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+20:59:09.593 [http-nio-8080-exec-2] ERROR controllers.CustomerController -- init failed with
+21:02:31.499 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+12:08:12.542 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+17:33:12.621 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+18:05:23.706 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+18:10:02.083 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+18:19:12.612 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+18:25:49.824 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+18:38:34.227 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+18:40:01.665 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+18:43:07.340 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+18:44:49.825 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+18:51:30.319 [http-nio-8080-exec-2] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+18:58:27.116 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+19:04:18.145 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
+19:08:56.147 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
