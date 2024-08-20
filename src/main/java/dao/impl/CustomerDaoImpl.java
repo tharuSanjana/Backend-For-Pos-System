@@ -58,4 +58,26 @@ public final class CustomerDaoImpl implements CustomerDao {
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public CustomerDto getCustomer(String customerId, Connection connection) {
+        var customerDto = new CustomerDto();
+        try {
+            var ps = connection.prepareStatement(GET_CUSTOMER);
+            ps.setString(1, customerId);
+            var resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+
+                customerDto.setCus_id(resultSet.getString("cus_id"));
+                customerDto.setName(resultSet.getString("name"));
+                customerDto.setNic(resultSet.getString("nic"));
+                customerDto.setEmail(resultSet.getString("email"));
+                customerDto.setAddress(resultSet.getString("address"));
+                customerDto.setTel(resultSet.getString("tel"));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customerDto;
+    }
 }

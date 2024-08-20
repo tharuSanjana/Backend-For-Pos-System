@@ -22,4 +22,9 @@ public class CustomerBoImpl implements CustomerBo{
     public boolean deleteCustomer(String customerId, Connection connection) {
         return customerDao.deleteCustomer(customerId,connection);
     }
+
+    @Override
+    public CustomerDto getCustomer(String customerId, Connection connection) {
+        return customerDao.getCustomer(customerId,connection);
+    }
 }
