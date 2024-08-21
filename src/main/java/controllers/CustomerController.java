@@ -40,14 +40,6 @@ public class CustomerController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        /*try {
-
-            var ctx = new InitialContext();
-            DataSource pool= (DataSource) ctx.lookup("java:comp/env/jdbc/pos");
-            this.connection=pool.getConnection();
-        }catch (NamingException | SQLException e){
-            e.printStackTrace();
-        }*/
 
         logger.info("Initializing Student Controller with call init method ");
         logger.trace("inite called");
