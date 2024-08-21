@@ -153,3 +153,4 @@ java.lang.ClassCastException: class java.util.ArrayList cannot be cast to class 
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:636)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
+12:57:31.161 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
