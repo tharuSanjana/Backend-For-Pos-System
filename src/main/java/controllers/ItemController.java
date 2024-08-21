@@ -149,7 +149,7 @@ public class ItemController extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to retrieve customers");
         }*/
 
-        /*var itemBo = new ItemBoImpl();
+        var itemBo = new ItemBoImpl();
         List<ItemDto> items = (List<ItemDto>) itemBo.getAllItems(connection);
 
         resp.setContentType("application/json");
@@ -158,7 +158,7 @@ public class ItemController extends HttpServlet {
             jsonb.toJson(new ArrayList<>(), resp.getWriter());
         } else {
             jsonb.toJson(items, resp.getWriter());
-        }*/
+        }
     }
 
     private void getItemById(HttpServletRequest req, HttpServletResponse resp, String itemId) throws IOException {
@@ -173,4 +173,6 @@ public class ItemController extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to retrieve customer");
         }
     }
+
+
 }

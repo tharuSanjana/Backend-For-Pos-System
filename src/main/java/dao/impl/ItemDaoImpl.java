@@ -5,7 +5,11 @@ import dto.CustomerDto;
 import dto.ItemDto;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemDaoImpl implements ItemDao{
 
@@ -14,6 +18,8 @@ public class ItemDaoImpl implements ItemDao{
     static String UPDATE_ITEM = "UPDATE item SET name = ?, qty = ?, price = ? WHERE item_id = ?";
     static String DELETE_ITEM = "DELETE FROM item WHERE item_id = ?";
     static String GET_ALL_ITEM = "SELECT * FROM item";
+
+
     @Override
     public boolean saveItem(Item item, Connection connection) {
         try {
@@ -74,5 +80,26 @@ public class ItemDaoImpl implements ItemDao{
             e.printStackTrace();
         }
         return itemDto;
+    }
+
+    @Override
+    public List<ItemDto> getAllItems(Connection connection) {
+        List<ItemDto> items = new ArrayList<>();
+
+        try (PreparedStatement stmt = connection.prepareStatement(GET_ALL_ITEM)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    items.add(new ItemDto(
+                            rs.getString("item_id"),
+                            rs.getString("name"),
+                            rs.getString("qty"),
+                            rs.getString("price")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return items;
     }
 }

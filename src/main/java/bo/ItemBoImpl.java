@@ -5,6 +5,7 @@ import dao.impl.ItemDaoImpl;
 import dto.ItemDto;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class ItemBoImpl implements ItemBo{
 
@@ -27,5 +28,10 @@ public class ItemBoImpl implements ItemBo{
     @Override
     public ItemDto getItem(String itemId, Connection connection) {
         return itemDao.getItem(itemId,connection);
+    }
+
+    @Override
+    public List<ItemDto> getAllItems(Connection connection) {
+        return itemDao.getAllItems(connection);
     }
 }

@@ -159,17 +159,7 @@ public class CustomerController extends HttpServlet {
     }
 
     private void getAllCustomers(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        /*var customerBo = new CustomerBoImpl();
 
-        try (var writer = resp.getWriter()) {
-            var customers = customerBo.getAllCustomers(connection);
-            resp.setContentType("application/json");
-            Jsonb jsonb = JsonbBuilder.create();
-            jsonb.toJson(customers, writer);
-        } catch (Exception e) {
-            logger.error("Error retrieving all customers", e);
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to retrieve customers");
-        }*/
 
         var customerBo = new CustomerBoImpl();
         List<CustomerDto> customers = (List<CustomerDto>) customerBo.getAllCustomers(connection);
