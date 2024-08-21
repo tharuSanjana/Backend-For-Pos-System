@@ -1,6 +1,7 @@
 package dao.impl;
 
 import Entity.Item;
+import dto.CustomerDto;
 import dto.ItemDto;
 
 import java.sql.Connection;
@@ -52,5 +53,26 @@ public class ItemDaoImpl implements ItemDao{
         } catch (SQLException e) {
             throw new RuntimeException();
         }
+    }
+
+    @Override
+    public ItemDto getItem(String itemId, Connection connection) {
+
+        var itemDto = new ItemDto();
+        try {
+            var ps = connection.prepareStatement(GET_ITEM);
+            ps.setString(1, itemId);
+            var resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+
+                itemDto.setItem_id(resultSet.getString("item_id"));
+                itemDto.setName(resultSet.getString("name"));
+                itemDto.setQty(resultSet.getString("qty"));
+                itemDto.setPrice(resultSet.getString("price"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return itemDto;
     }
 }

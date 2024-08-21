@@ -21,6 +21,8 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/Item")
 public class ItemController extends HttpServlet {
@@ -115,6 +117,60 @@ public class ItemController extends HttpServlet {
         } catch (Exception e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+
+        if ("getAll".equalsIgnoreCase(action)) {
+            getAllItems(req, resp);
+        } else {
+            var itemId = req.getParameter("id");
+            if (itemId != null) {
+                getItemById(req, resp, itemId);
+            } else {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid request");
+            }
+        }
+    }
+
+    private void getAllItems(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        /*var customerBo = new CustomerBoImpl();
+
+        try (var writer = resp.getWriter()) {
+            var customers = customerBo.getAllCustomers(connection);
+            resp.setContentType("application/json");
+            Jsonb jsonb = JsonbBuilder.create();
+            jsonb.toJson(customers, writer);
+        } catch (Exception e) {
+            logger.error("Error retrieving all customers", e);
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to retrieve customers");
+        }*/
+
+        /*var itemBo = new ItemBoImpl();
+        List<ItemDto> items = (List<ItemDto>) itemBo.getAllItems(connection);
+
+        resp.setContentType("application/json");
+        Jsonb jsonb = JsonbBuilder.create();
+        if (items == null || items.isEmpty()) {
+            jsonb.toJson(new ArrayList<>(), resp.getWriter());
+        } else {
+            jsonb.toJson(items, resp.getWriter());
+        }*/
+    }
+
+    private void getItemById(HttpServletRequest req, HttpServletResponse resp, String itemId) throws IOException {
+        ItemBoImpl itemBo = new ItemBoImpl();
+        try (var writer = resp.getWriter()) {
+            var customer = itemBo.getItem(itemId, connection);
+            resp.setContentType("application/json");
+            Jsonb jsonb = JsonbBuilder.create();
+            jsonb.toJson(customer, writer);
+        } catch (Exception e) {
+            logger.error("Error retrieving customer by ID", e);
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to retrieve customer");
         }
     }
 }
