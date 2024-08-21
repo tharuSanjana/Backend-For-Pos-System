@@ -12,4 +12,11 @@ public class Item {
     private String name;
     private String  qty;
     private String price;
+
+    public Item(String name,String qty,String price){
+        this.name = name;
+        this.qty = qty;
+        this.price = price;
+
+    }
 }

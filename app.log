@@ -157,3 +157,5 @@ java.lang.ClassCastException: class java.util.ArrayList cannot be cast to class 
 16:44:27.184 [http-nio-8080-exec-1] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 
 16:45:15.729 [http-nio-8080-exec-4] INFO  controllers.ItemController -- Initializing Student Controller with call init method 
 16:47:50.885 [http-nio-8080-exec-1] INFO  controllers.ItemController -- Initializing Student Controller with call init method 
+18:06:51.864 [http-nio-8080-exec-1] INFO  controllers.ItemController -- Initializing Student Controller with call init method 
+18:09:25.821 [http-nio-8080-exec-6] INFO  controllers.CustomerController -- Initializing Student Controller with call init method 

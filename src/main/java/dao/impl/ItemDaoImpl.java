@@ -27,4 +27,30 @@ public class ItemDaoImpl implements ItemDao{
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public boolean updateItem(String itemId, Item item, Connection connection) {
+        try {
+            var ps = connection.prepareStatement(UPDATE_ITEM);
+            ps.setString(1, item.getName());
+            ps.setString(2, item.getQty());
+            ps.setString(3, item.getQty());
+            ps.setString(4, itemId);
+            return ps.executeUpdate() != 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error updating customer with ID: " + itemId, e);
+        }
+    }
+
+    @Override
+    public boolean deleteItem(String itemId, Connection connection) {
+        try {
+            var ps = connection.prepareStatement(DELETE_ITEM);
+            ps.setString(1, itemId);
+            return ps.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }

@@ -72,4 +72,49 @@ public class ItemController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(!req.getContentType().toLowerCase().startsWith("application/json")|| req.getContentType() == null){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        try (var writer = resp.getWriter()){
+            /*   var customerId = req.getParameter("cus_id");*/
+
+            Jsonb jsonb = JsonbBuilder.create();
+            var itemBo = new ItemBoImpl();
+            var updatedItem = jsonb.fromJson(req.getReader(),ItemDto.class);
+            System.out.println(updatedItem);
+            System.out.println("item_id"+ updatedItem.getItem_id());
+            if(itemBo.updateItem(updatedItem.getItem_id(), updatedItem,connection)){
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }else {
+                writer.write("Update Failed");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            }
+        } catch (JsonException e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Jsonb jsonb = JsonbBuilder.create();
+        var itemBo = new ItemBoImpl();
+        var deleteItem = jsonb.fromJson(req.getReader(),ItemDto.class);
+        System.out.println(deleteItem);
+        try (var writer = resp.getWriter()){
+
+            if(itemBo.deleteItem(deleteItem.getItem_id(), connection)){
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }else {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Delete Failed");
+            }
+        } catch (Exception e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e);
+        }
+    }
 }
