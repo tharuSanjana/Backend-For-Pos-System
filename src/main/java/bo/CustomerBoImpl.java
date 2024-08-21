@@ -5,6 +5,7 @@ import dao.impl.CustomerDaoImpl;
 import dto.CustomerDto;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class CustomerBoImpl implements CustomerBo{
     CustomerDaoImpl customerDao = new CustomerDaoImpl();
@@ -26,5 +27,9 @@ public class CustomerBoImpl implements CustomerBo{
     @Override
     public CustomerDto getCustomer(String customerId, Connection connection) {
         return customerDao.getCustomer(customerId,connection);
+    }
+
+    public List<CustomerDto> getAllCustomers(Connection connection) {
+        return customerDao.getAllCustomer(connection);
     }
 }

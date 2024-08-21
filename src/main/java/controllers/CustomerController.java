@@ -21,6 +21,8 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @WebServlet(urlPatterns = "/Customer")
@@ -140,7 +142,7 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        var customerId = req.getParameter("id");
+       /* var customerId = req.getParameter("id");
         var customerBo = new CustomerBoImpl();
         try (var writer = resp.getWriter()){
             var customer = customerBo.getCustomer(customerId, connection);
@@ -148,6 +150,59 @@ public class CustomerController extends HttpServlet {
             resp.setContentType("application/json");
             Jsonb jsonb = JsonbBuilder.create();
             jsonb.toJson(customer,writer);
+        }*/
+
+        String action = req.getParameter("action");
+
+        if ("getAll".equalsIgnoreCase(action)) {
+            getAllCustomers(req, resp);
+        } else {
+            var customerId = req.getParameter("id");
+            if (customerId != null) {
+                getCustomerById(req, resp, customerId);
+            } else {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid request");
+            }
         }
     }
+
+    private void getAllCustomers(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        /*var customerBo = new CustomerBoImpl();
+
+        try (var writer = resp.getWriter()) {
+            var customers = customerBo.getAllCustomers(connection);
+            resp.setContentType("application/json");
+            Jsonb jsonb = JsonbBuilder.create();
+            jsonb.toJson(customers, writer);
+        } catch (Exception e) {
+            logger.error("Error retrieving all customers", e);
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to retrieve customers");
+        }*/
+
+        var customerBo = new CustomerBoImpl();
+        List<CustomerDto> customers = (List<CustomerDto>) customerBo.getAllCustomers(connection);
+
+        resp.setContentType("application/json");
+        Jsonb jsonb = JsonbBuilder.create();
+        if (customers == null || customers.isEmpty()) {
+            jsonb.toJson(new ArrayList<>(), resp.getWriter());
+        } else {
+            jsonb.toJson(customers, resp.getWriter());
+        }
+    }
+
+    private void getCustomerById(HttpServletRequest req, HttpServletResponse resp, String customerId) throws IOException {
+        var customerBo = new CustomerBoImpl();
+        try (var writer = resp.getWriter()) {
+            var customer = customerBo.getCustomer(customerId, connection);
+            resp.setContentType("application/json");
+            Jsonb jsonb = JsonbBuilder.create();
+            jsonb.toJson(customer, writer);
+        } catch (Exception e) {
+            logger.error("Error retrieving customer by ID", e);
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to retrieve customer");
+        }
+    }
+
+
 }
