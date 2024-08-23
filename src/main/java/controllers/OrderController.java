@@ -48,7 +48,7 @@ public class OrderController extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(!req.getContentType().toLowerCase().startsWith("application/json")|| req.getContentType() == null){
+        /*if(!req.getContentType().toLowerCase().startsWith("application/json")|| req.getContentType() == null){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
 
@@ -59,10 +59,10 @@ public class OrderController extends HttpServlet {
 
             if (saveData.saveOrder(orderDto, connection)){
                 System.out.println(orderDto);
-                writer.write("Student saved successfully");
+                writer.write("Order saved successfully");
                 resp.setStatus(HttpServletResponse.SC_CREATED);
             }else {
-                writer.write("Save student failed");
+                writer.write("Save order failed");
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 
             }
@@ -70,7 +70,39 @@ public class OrderController extends HttpServlet {
         } catch (JsonException e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
+    }*/
+        if (!req.getContentType().toLowerCase().startsWith("application/json")) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Content-Type");
+            return;
+        }
+
+        try (var writer = resp.getWriter()) {
+            Jsonb jsonb = JsonbBuilder.create();
+            OrderDto orderDto = jsonb.fromJson(req.getReader(), OrderDto.class);
+            var orderBo = new OrderBoImpl();
+
+            if (orderBo.saveOrder(orderDto, connection)) {
+                logger.info("Order saved successfully: {}", orderDto.getO_id());
+                writer.write("Order saved successfully");
+                resp.setStatus(HttpServletResponse.SC_CREATED);
+            } else {
+                logger.warn("Failed to save order: {}", orderDto.getO_id());
+                writer.write("Failed to save order");
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
+        } catch (JsonException e) {
+            logger.error("JSON processing failed", e);
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JSON format");
+        } catch (SQLException e) {
+            logger.error("Database error", e);
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error");
+        }
     }
-}
+
+    }
+
+

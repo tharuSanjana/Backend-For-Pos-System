@@ -69,10 +69,10 @@ public class CustomerController extends HttpServlet {
 
             if (saveData.saveCustomer(customerDto, connection)){
                 System.out.println(customerDto);
-                writer.write("Student saved successfully");
+                writer.write("Customer saved successfully");
                 resp.setStatus(HttpServletResponse.SC_CREATED);
             }else {
-                writer.write("Save student failed");
+                writer.write("Save customer failed");
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 
             }
