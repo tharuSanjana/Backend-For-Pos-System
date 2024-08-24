@@ -50,29 +50,10 @@ public class OrderBoImpl implements OrderBo{
             connection.setAutoCommit(false);
 
             // Save the order
-            boolean isOrderSaved = orderDao.saveOrder(new Order(
-                    orderDto.getO_id(),
-                    orderDto.getDate(),
-                    orderDto.getC_id(),
-                    orderDto.getC_name(),
-                    orderDto.getC_nic(),
-                    orderDto.getC_email(),
-                    orderDto.getC_address(),
-                    orderDto.getC_tel(),
-                    orderDto.getI_id(),
-                    orderDto.getI_name(),
-                    orderDto.getI_price(),
-                    orderDto.getI_qty(),
-                    orderDto.getI_selectedQty(),
-                    orderDto.getTotal(),
-                    orderDto.getBalance(),
-                    orderDto.getCash(),
-                    orderDto.getDiscount()
-            ), connection);
+            boolean isOrderSaved = orderDao.saveOrder(orderDto, connection);
 
             // Save the associated order items
-            boolean isTransactionSaved = isOrderSaved && transactionDao.saveTran(
-                    new Order_item(orderDto.getO_id(), orderDto.getI_id()), connection);
+            boolean isTransactionSaved = isOrderSaved && transactionDao.saveTran(orderDto, connection);
 
             if (isTransactionSaved) {
                 connection.commit();
@@ -82,6 +63,7 @@ public class OrderBoImpl implements OrderBo{
             }
         } catch (SQLException e) {
             connection.rollback();
+            e.printStackTrace();  // Add this to help debug
             throw e;
         } finally {
             connection.setAutoCommit(true);
