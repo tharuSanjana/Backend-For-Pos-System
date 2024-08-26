@@ -1,0 +1,58 @@
+show databases;
+create database posSystem;
+use posSystem;
+create table customer(
+cus_id varchar(100) primary key,
+name varchar(100),
+nic varchar(100),
+email varchar(100),
+address varchar(100),
+tel varchar(100)
+);
+select *  from customer;
+create table item(
+item_id varchar(100) primary key,
+name varchar(100),
+qty varchar(100),
+price varchar(100)
+);
+select *  from item;
+create table orders(
+o_id varchar(100) primary key,
+date date,
+c_id varchar(100),
+c_name varchar(100),
+c_nic varchar(100),
+c_email varchar(100),
+c_address varchar(100),
+c_tel varchar(100),
+i_id varchar(100),
+i_name varchar(100),
+i_price varchar(100),
+i_qty varchar(100),
+i_selectedQty varchar(100),
+total varchar(100),
+balance varchar(100),
+cash varchar(100),
+discount varchar(100),
+FOREIGN KEY (c_id) REFERENCES customer(cus_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+FOREIGN KEY (i_id) REFERENCES item(item_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+select * from orders;
+create table order_item(
+o_id varchar(100),
+i_id varchar(100),
+FOREIGN KEY (o_id) REFERENCES orders(o_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+FOREIGN KEY (i_id) REFERENCES item(item_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+select * from order_item;
+show tables;
+
